@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# ------------------------------------------------------------------
+#    Git pre-commit hook with clang-format for Unreal Engine projects
+#    First run: format all tracked C++ files
+#    Subsequent runs: format only staged files
+# ------------------------------------------------------------------
+
+
+set -e
+
+# --- Path to clang-format (можно просто "clang-format" если в PATH) ---
+CLANG="clang-format"
+if ! command -v "$CLANG" >/dev/null 2>&1; then
+    echo "::notice::[pre-commit] clang-format not found. Install clang-format or add to PATH."
+    exit 1
+fi
+
+
+# ------------------------------------------------------------------
+#    Check for files with spaces in their names.
+#    If any are found, print the list and abort the commit.
+# ------------------------------------------------------------------
+
+
+# Get a list of all tracked files (potentially many, but this is done once)
+ALL_FILES=$(git ls-files)
+
+# Filter only those lines where a space character appears
+FILES_WITH_SPACES=$(printf "%s\n" "$ALL_FILES" | grep ' ')
+
+if [[ -n $FILES_WITH_SPACES ]]; then
+    echo "::error::[pre-commit] Error: files with spaces in filenames were found in the repository."
+    printf '%s\n' "$FILES_WITH_SPACES"
+    echo ""
+    echo "::error::[pre-commit] Commit aborted. Please rename these files without spaces."
+    exit 1
+fi
+
+
+# ------------------------------------------------------------------
+#    If we got here, than no issues have been detected,
+#    so the script will proceed to further steps.
+# ------------------------------------------------------------------
+
+
+# --- Marker file to detect first run ---
+MARKER=".githooks/.clang-format-all-done"
+COUNT=0
+
+# --- First run: format all tracked C++ files ---
+if [ ! -f "$MARKER" ]; then
+    echo "::notice::[pre-commit] First run: formatting ALL tracked C++ files..."
+    for file in $(git ls-files '*.h' '*.hpp' '*.hxx' '*.inl' '*.cpp' '*.cc' '*.cxx'); do
+        if [ -f "$file" ]; then
+            "$CLANG" -i --style=file "$file"
+            git add "$file"
+            COUNT=$((COUNT+1))
+        fi
+    done
+    touch "$MARKER"
+else
+    # --- Subsequent runs: format only staged C++ files ---
+    echo "::notice::[pre-commit] Formatting STAGED C++ files..."
+    for file in $(git diff --cached --name-only --diff-filter=ACMR -- '*.h' '*.hpp' '*.hxx' '*.inl' '*.cpp' '*.cc' '*.cxx'); do
+        if [ -f "$file" ]; then
+            "$CLANG" -i --style=file "$file"
+            git add "$file"
+            COUNT=$((COUNT+1))
+        fi
+    done
+fi
+
+echo "::notice::[pre-commit] clang-format applied to $COUNT file(s)."

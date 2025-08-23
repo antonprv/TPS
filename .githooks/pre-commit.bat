@@ -1,26 +1,32 @@
 @echo off
 setlocal enabledelayedexpansion
 
-rem --- config ---
-set "CLANG_FORMAT=clang-format"  rem or full path to clang-format.exe
-rem ----------------
-
-where "%CLANG_FORMAT%" >nul 2>nul
-if errorlevel 1 (
-  echo [pre-commit] clang-format not found. Install LLVM or add to PATH.
+set "CLANG=C:\Program Files\LLVM\bin\clang-format.exe"
+if not exist "%CLANG%" (
+  echo [pre-commit] clang-format not found at %CLANG%
   exit /b 1
 )
 
-for /f "delims=" %%R in ('git rev-parse --show-toplevel') do set "REPO=%%R"
-cd /d "%REPO%"
+set "MARKER=.git\.clang-format-all-done"
+set /a COUNT=0
 
-rem Format all tracked C/C++ files in the repo
-for /f "delims=" %%F in ('
-  git ls-files -- "*.h" "*.hpp" "*.hxx" "*.inl" "*.cpp" "*.cc" "*.cxx"
-') do (
-  "%CLANG_FORMAT%" -i --style=file --fallback-style=llvm "%%F"
-  git add "%%F"
+if not exist "%MARKER%" (
+  echo [pre-commit] First run: formatting ALL tracked C++ files...
+  for /f "delims=" %%F in ('git ls-files *.h *.hpp *.hxx *.inl *.cpp *.cc *.cxx') do (
+    "%CLANG%" -i --style=file "%%F"
+    git add "%%F"
+    set /a COUNT+=1
+  )
+  echo. > "%MARKER%"
+) else (
+  echo [pre-commit] Formatting STAGED C++ files...
+  for /f "delims=" %%F in ('git diff --cached --name-only --diff-filter=ACMR -- *.h *.hpp *.hxx *.inl *.cpp *.cc *.cxx') do (
+    "%CLANG%" -i --style=file "%%F"
+    git add "%%F"
+    set /a COUNT+=1
+  )
 )
 
-echo [pre-commit] clang-format applied.
+echo [pre-commit] clang-format applied to %COUNT% file(s).
+endlocal
 exit /b 0

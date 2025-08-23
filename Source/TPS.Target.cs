@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 public class TPSTarget : TargetRules
 {
-	public TPSTarget(TargetInfo Target) : base(Target)
-	{
-		Type = TargetType.Game;
-		ExtraModuleNames.Add("TPS");
-	}
+    public TPSTarget(TargetInfo Target) : base(Target)
+    {
+        Type = TargetType.Game;
+        ExtraModuleNames.Add("TPS");
+    }
 }

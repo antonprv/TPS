@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "pre-commit hook running"
-
 # ------------------------------------------------------------------
 #    Git pre-commit hook with clang-format for Unreal Engine projects
 #    First run: format all tracked C++ files
@@ -18,27 +16,23 @@ if ! command -v "$CLANG" >/dev/null 2>&1; then
     exit 1
 fi
 
-
 # ------------------------------------------------------------------
 #    Check for files with spaces in their names.
 #    If any are found, print the list and abort the commit.
 # ------------------------------------------------------------------
 
 
-# Get a list of all tracked files (potentially many, but this is done once)
-ALL_FILES=$(git ls-files)
+while IFS= read -r file; do
+    if [[ "$file" == *" "* ]]; then
+        echo "::error::[pre-commit] File with space: $file"
+        FOUND=1
+    fi
+done < <(git ls-files)
 
-# Filter only those lines where a space character appears
-FILES_WITH_SPACES=$(printf "%s\n" "$ALL_FILES" | grep ' ')
-
-if [[ -n $FILES_WITH_SPACES ]]; then
-    echo "::error::[pre-commit] Error: files with spaces in filenames were found in the repository."
-    printf '%s\n' "$FILES_WITH_SPACES"
-    echo ""
-    echo "::error::[pre-commit] Commit aborted. Please rename these files without spaces."
+if [[ -n $FOUND ]]; then
+    echo "::error::[pre-commit] Commit aborted. Please rename files without spaces."
     exit 1
 fi
-
 
 # ------------------------------------------------------------------
 #    If we got here, than no issues have been detected,

@@ -14,7 +14,7 @@ if ! command -v "$CLANG" >/dev/null 2>&1; then
 fi
 
 # --- Marker file to detect first run ---
-MARKER=".git/.clang-format-all-done"
+MARKER=".githooks/.clang-format-all-done"
 COUNT=0
 
 # --- First run: format all tracked C++ files ---

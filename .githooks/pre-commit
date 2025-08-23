@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "pre-commit hook running"
+
 # ------------------------------------------------------------------
 #    Git pre-commit hook with clang-format for Unreal Engine projects
 #    First run: format all tracked C++ files

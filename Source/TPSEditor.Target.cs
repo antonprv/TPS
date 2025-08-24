@@ -2,11 +2,14 @@
 
 using UnrealBuildTool;
 using System.Collections.Generic;
+using System;
 
 public class TPSEditorTarget : TargetRules
 {
     public TPSEditorTarget(TargetInfo Target) : base(Target)
     {
+        Console.WriteLine("TPS editor target: ------------------------------------------>");
+
         Type = TargetType.Editor;
         ExtraModuleNames.Add("TPS");
     }

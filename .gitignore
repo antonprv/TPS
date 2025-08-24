@@ -84,3 +84,6 @@ Build/
 devops/tests/data
 devops/jenkins/
 Documentation/
+Staging/
+Packaged/
+

@@ -73,17 +73,3 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-
-.vs
-*.sln
-DerivedDataCache/*
-Intermediate/*
-Saved/*
-Binaries/*
-Build/*
-devops/tests/data
-devops/jenkins/*
-Documentation/*
-Staging/*
-Packaged/*
-

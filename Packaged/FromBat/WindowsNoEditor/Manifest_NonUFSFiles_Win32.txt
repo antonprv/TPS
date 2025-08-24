@@ -1,0 +1,17 @@
+TPS/Binaries/Win32/TPS-Win32-Shipping.exe	2025-08-24T04:18:21.715Z
+Engine/Binaries/ThirdParty/Oculus/OVRPlugin/OVRPlugin/Win32/OVRPlugin.dll	2025-08-22T13:55:23.858Z
+Engine/Binaries/ThirdParty/libsndfile/Win32/libsndfile-1.dll	2025-08-22T13:55:15.202Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/PxFoundation_x86.dll	2025-08-22T13:55:29.161Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/PxPvdSDK_x86.dll	2025-08-22T13:55:29.243Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/PhysX3_x86.dll	2025-08-22T13:55:28.298Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/PhysX3Cooking_x86.dll	2025-08-22T13:55:28.861Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/PhysX3Common_x86.dll	2025-08-22T13:55:28.601Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/APEX_Clothing_x86.dll	2025-08-22T13:55:27.045Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/APEX_Legacy_x86.dll	2025-08-22T13:55:27.572Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/ApexFramework_x86.dll	2025-08-22T13:55:27.992Z
+Engine/Binaries/ThirdParty/PhysX3/Win32/VS2015/NvCloth_x86.dll	2025-08-22T13:55:28.233Z
+Engine/Binaries/ThirdParty/OpenVR/OpenVRv1_5_17/Win32/openvr_api.dll	2025-08-22T13:55:24.280Z
+Engine/Binaries/ThirdParty/Ogg/Win32/VS2015/libogg.dll	2025-08-22T13:55:23.951Z
+Engine/Binaries/ThirdParty/Vorbis/Win32/VS2015/libvorbis.dll	2025-08-22T13:56:15.381Z
+Engine/Binaries/ThirdParty/Vorbis/Win32/VS2015/libvorbisfile.dll	2025-08-22T13:56:15.382Z
+TPS.exe	2025-08-24T04:18:27.119Z

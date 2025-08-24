@@ -8,7 +8,7 @@ public class TPSTarget : TargetRules
 {
     public TPSTarget(TargetInfo Target) : base(Target)
     {
-        Console.WriteLine("TPS module rules: ------------------------------------------>");
+        Console.WriteLine("TPS game rules: ------------------------------------------>");
 
         Type = TargetType.Game;
         ExtraModuleNames.Add("TPS");

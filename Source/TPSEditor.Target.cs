@@ -8,7 +8,7 @@ public class TPSEditorTarget : TargetRules
 {
     public TPSEditorTarget(TargetInfo Target) : base(Target)
     {
-        Console.WriteLine("TPS editor target: ------------------------------------------>");
+        Console.WriteLine("TPS editor rules: ------------------------------------------>");
 
         Type = TargetType.Editor;
         ExtraModuleNames.Add("TPS");

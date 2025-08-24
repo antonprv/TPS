@@ -41,7 +41,7 @@ fi
 
 
 # --- Marker file to detect first run ---
-MARKER=".githooks/.clang-format-all-done"
+MARKER="devops/githooks/markers/.clang-format-all-done"
 COUNT=0
 
 # --- First run: format all tracked C++ files ---

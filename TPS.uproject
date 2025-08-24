@@ -1,13 +1,13 @@
 {
-  "FileVersion": 3,
-  "EngineAssociation": "4.23",
-  "Category": "",
-  "Description": "",
-  "Modules": [
-    {
-      "Name": "TPS",
-      "Type": "Runtime",
-      "LoadingPhase": "Default"
-    }
-  ]
+	"FileVersion": 3,
+	"EngineAssociation": "{4824F699-412F-2A8B-65A2-73BA767A5387}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "TPS",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
 }

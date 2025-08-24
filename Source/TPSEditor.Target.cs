@@ -12,5 +12,8 @@ public class TPSEditorTarget : TargetRules
 
         Type = TargetType.Editor;
         ExtraModuleNames.Add("TPS");
+		
+		// UE5 compatability fix
+		BuildEnvironment = TargetBuildEnvironment.Unique;
     }
 }

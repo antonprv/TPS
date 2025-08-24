@@ -76,14 +76,14 @@ DerivedDataCache/*
 
 .vs
 *.sln
-DerivedDataCache/
-Intermediate/
-Saved/
-Binaries/
-Build/
+DerivedDataCache/*
+Intermediate/*
+Saved/*
+Binaries/*
+Build/*
 devops/tests/data
-devops/jenkins/
-Documentation/
-Staging/
-Packaged/
+devops/jenkins/*
+Documentation/*
+Staging/*
+Packaged/*
 

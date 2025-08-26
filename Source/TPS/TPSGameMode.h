@@ -13,4 +13,12 @@ class ATPSGameMode : public AGameModeBase
 
 public:
     ATPSGameMode();
+
+protected:
+    virtual void BeginPlay() override;
+
+private:
+    static void SetLowScalability();
+    static void SetMaxFPS(int32 MaxFPS);
+    static void SetScreenPercentage(int32 ScreenPercentage);
 };

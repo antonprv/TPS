@@ -16,15 +16,5 @@ public class TPS : ModuleRules
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore"});
-
-        if (Target.Type == TargetType.Editor)
-        {
-            PublicDependencyModuleNames.Add("HeadMountedDisplay");
-            PublicDefinitions.Add("WITH_VR_SUPPORT=1");
-        }
-        else if (Target.Type == TargetType.Game)
-        {
-            PublicDefinitions.Add("WITH_VR_SUPPORT=0");
-        }
     }
 }

@@ -1,11 +1,6 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "TPSCharacter.h"
-
-#if WITH_VR_SUPPORT
-#include "HeadMountedDisplayFunctionLibrary.h"
-#endif  // WITH_VR_SUPPORT
-
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -79,13 +74,6 @@ void ATPSCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 
     // VR headset functionality
     PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ATPSCharacter::OnResetVR);
-}
-
-void ATPSCharacter::OnResetVR()
-{
-#if WITH_VR_SUPPORT
-    UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
-#endif  // WITH_VR_SUPPORT
 }
 
 void ATPSCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)

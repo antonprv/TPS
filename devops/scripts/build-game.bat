@@ -1,7 +1,9 @@
-"E:\UE_Other\UE_4.23\Engine\Build\BatchFiles\RunUAT.bat" ^
+"C:\JenkinsAgent\workspace\UELatestLTS\Engine\Build\BatchFiles\RunUAT.bat" ^
 BuildCookRun ^
 -project="C:\JenkinsAgent\workspace\Unreal Games\TPS\TPS.uproject" ^
--platform=Win32 -clientconfig=Shipping ^
--archivedirectory="C:\JenkinsAgent\workspace\Unreal Games\TPS\Packaged\FromBat" ^
+-platform=Win64 -clientconfig=Shipping ^
+-archivedirectory="C:\JenkinsAgent\workspace\Unreal Games\TPS\Package\FromBat" ^
 -stagingdirectory="C:\JenkinsAgent\workspace\Unreal Games\TPS\Staging" ^
--build -cook -stage -skippackage -archive -pak -package
+-build -cook -stage -archive -pak -package
+
+PAUSE

@@ -15,5 +15,10 @@ public class TPSEditorTarget : TargetRules
 		
 		// UE5 compatability fix
 		BuildEnvironment = TargetBuildEnvironment.Unique;
+		
+		DefaultBuildSettings = BuildSettingsVersion.V5;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_6;
+		CppStandard = CppStandardVersion.Cpp20;
+
     }
 }

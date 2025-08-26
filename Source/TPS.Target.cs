@@ -12,5 +12,10 @@ public class TPSTarget : TargetRules
 
         Type = TargetType.Game;
         ExtraModuleNames.Add("TPS");
+		
+		DefaultBuildSettings = BuildSettingsVersion.V5;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_6;
+		CppStandard = CppStandardVersion.Cpp20;
+
     }
 }

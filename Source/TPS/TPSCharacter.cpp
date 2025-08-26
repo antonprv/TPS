@@ -71,9 +71,6 @@ void ATPSCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
     // handle touch devices
     PlayerInputComponent->BindTouch(IE_Pressed, this, &ATPSCharacter::TouchStarted);
     PlayerInputComponent->BindTouch(IE_Released, this, &ATPSCharacter::TouchStopped);
-
-    // VR headset functionality
-    PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ATPSCharacter::OnResetVR);
 }
 
 void ATPSCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)

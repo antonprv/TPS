@@ -1,4 +1,4 @@
-"C:\JenkinsAgent\workspace\UELatestLTS\Engine\Build\BatchFiles\RunUAT.bat" ^
+"C:\JenkinsAgent\workspace\UELTS\Engine\Build\BatchFiles\RunUAT.bat" ^
 BuildCookRun ^
 -project="C:\JenkinsAgent\workspace\Unreal Games\TPS\TPS.uproject" ^
 -platform=Win64 -clientconfig=Shipping ^

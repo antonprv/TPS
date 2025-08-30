@@ -13,6 +13,7 @@ set RunUATPath=%EnginePath_5.6%\Engine\Build\BatchFiles\RunUAT.bat
 
 rem Project params
 set ProjectRoot=C:\JenkinsAgent\workspace\Unreal Games\TPS
+set ProjectName=TPS
 set ProjectFile=TPS.uproject
 set ProjectPath=%ProjectRoot%\%ProjectFile%
 
@@ -25,3 +26,16 @@ set PackagePath=%ProjectRoot%\Package
 
 rem Build Visual Studio Project files and change version
 set VersionSelector=C:\JenkinsAgent\workspace\UELTS\Engine\Binaries\Win64\UnrealVersionSelector.exe
+
+rem Target params
+set EXTRA_MODULE_NAMES="%ProjectName%"
+
+set TargetTemplatePath=C:\JenkinsAgent\workspace\Unreal Games\TPS\devops\scripts\Templates\GameModule.Target.cs.template
+
+set TargetGameTemplatePath=C:\JenkinsAgent\workspace\Unreal Games\TPS\devops\scripts\Templates\GameOnlyModule.Target.cs.template
+
+set GameIni=C:\JenkinsAgent\workspace\Unreal Games\TPS\Config\DefaultGame.ini
+
+set SourceCodePath=C:\JenkinsAgent\workspace\Unreal Games\TPS\Source
+
+exit /b

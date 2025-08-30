@@ -2,6 +2,6 @@
 
 call "%~dp0\..\config.bat"
 
-"%VersionSelector%" -switchversionsilent "%ProjectFullPath%" "%SelectedEngine%"
+"%VersionSelector%" -switchversionsilent "%ProjectPath%" "%SelectedEngine%"
 
 PAUSE

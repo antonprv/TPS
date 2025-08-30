@@ -3,11 +3,11 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class TPSEditorTarget : TargetRules 
+public class TPSServerTarget : TargetRules 
 { 
-	public TPSEditorTarget(TargetInfo Target) : base(Target) 
+	public TPSServerTarget(TargetInfo Target) : base(Target) 
 	{ 
-		Type = TargetType.Editor; 
+		Type = TargetType.Server; 
 		ExtraModuleNames.AddRange( new string[] { "TPS" } ); 
 	} 
 } 

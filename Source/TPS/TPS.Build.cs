@@ -1,20 +1,27 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
+// This project uses GPL v3.0 licencing terms
 
+using System.IO;
 using UnrealBuildTool;
-using System;
 
 public class TPS : ModuleRules
 {
-    public TPS(ReadOnlyTargetRules Target) : base(Target)
-    {
-        Console.WriteLine("TPS module rules: ------------------------------------------>");
-        Console.WriteLine("Engine version: {0}.{1}.{2}",
-            Target.Version.MajorVersion, Target.Version.MinorVersion, Target.Version.PatchVersion);
-        Console.WriteLine("Target platform: {0}", Target.Platform);
-        Console.WriteLine("Target type: {0}", Target.Type);
+	public TPS(ReadOnlyTargetRules Target) : base(Target)
+	{
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+	
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
 
-        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore"});
-    }
+		PublicIncludePaths.Add(ModuleDirectory);
+
+
+		// Uncomment if you are using Slate UI
+		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+		
+		// Uncomment if you are using online features
+		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
+
+		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+	}
 }

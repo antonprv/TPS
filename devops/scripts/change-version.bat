@@ -1,13 +1,7 @@
 @echo off
 
-set VersionSelector=C:\JenkinsAgent\workspace\UELTS\Engine\Binaries\Win64\UnrealVersionSelector.exe
+call "%~dp0\..\config.bat"
 
-set ProjectName=TPS.uproject
-set ProjectPath=..\..\%ProjectName%
-for %%I in ("%ProjectPath%") do set "ProjectFullPath=%%~fI"
-
-set EnginePath=C:\JenkinsAgent\workspace\UELTS
-
-"%VersionSelector%" -switchversionsilent "%ProjectFullPath%" "%EnginePath%"
+"%VersionSelector%" -switchversionsilent "%ProjectFullPath%" "%SelectedEngine%"
 
 PAUSE

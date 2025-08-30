@@ -1,9 +1,11 @@
-"C:\JenkinsAgent\workspace\UELTS\Engine\Build\BatchFiles\RunUAT.bat" ^
+call "%~dp0\..\config.bat"
+
+"%RunUATPath%" ^
 BuildCookRun ^
--project="C:\JenkinsAgent\workspace\Unreal Games\TPS\TPS.uproject" ^
--platform=Win64 -clientconfig=Shipping ^
--archivedirectory="C:\JenkinsAgent\workspace\Unreal Games\TPS\Package\FromBat" ^
--stagingdirectory="C:\JenkinsAgent\workspace\Unreal Games\TPS\Staging" ^
+-project="%ProjectPath%" ^
+-platform=%Platform% -clientconfig=%Configuration% ^
+-archivedirectory="%PackagePath%\DefaultConfig" ^
+-stagingdirectory="%PackagePath%\Staging" ^
 -build -cook -stage -archive -pak -package
 
 PAUSE

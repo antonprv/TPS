@@ -11,21 +11,24 @@ def format_cs_file(path):
 
     # 1. Handle top comment block
     while i < n and lines[i].strip().startswith("//"):
-        new_lines.append(lines[i].rstrip() + "\n")
+        if lines[i].strip().lower() != "echo is off.":
+            new_lines.append(lines[i].rstrip() + "\n")
         i += 1
     if i < n and lines[i].strip() != "":
         new_lines.append("\n")  # exactly one blank line after comment
 
     # 2. Handle using block
     while i < n and lines[i].strip().startswith("using "):
-        new_lines.append(lines[i].rstrip() + "\n")
+        if lines[i].strip().lower() != "echo is off.":
+            new_lines.append(lines[i].rstrip() + "\n")
         i += 1
     if i < n and lines[i].strip() != "":
         new_lines.append("\n")  # exactly one blank line after last using
 
-    # 3. Append rest of file unchanged
+    # 3. Append rest of file unchanged, skipping "ECHO is off."
     while i < n:
-        new_lines.append(lines[i])
+        if lines[i].strip().lower() != "echo is off.":
+            new_lines.append(lines[i])
         i += 1
 
     # Write back

@@ -8,6 +8,7 @@ public class TPSClientTarget : TargetRules
 	public TPSClientTarget(TargetInfo Target) : base(Target) 
 	{ 
 		Type = TargetType.Client; 
+		DefaultBuildSettings = BuildSettingsVersion.V4; 
 		ExtraModuleNames.AddRange( new string[] { "TPS" } ); 
 	} 
 } 

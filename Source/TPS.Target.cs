@@ -8,6 +8,7 @@ public class TPSTarget : TargetRules
 	public TPSTarget(TargetInfo Target) : base(Target) 
 	{ 
 		Type = TargetType.Game; 
+		DefaultBuildSettings = BuildSettingsVersion.V4; 
 		ExtraModuleNames.AddRange( new string[] { "TPS" } ); 
 	} 
 } 

@@ -1,4 +1,5 @@
 @echo off
+
 setlocal
 
 rem List of target scripts

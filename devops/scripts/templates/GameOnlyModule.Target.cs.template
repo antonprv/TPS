@@ -9,7 +9,7 @@ public class %MODULE_NAME%Target : TargetRules
 	{
 		Type = TargetType.%TARGET_TYPE%;
 		
-		DefaultBuildSettings = BuildSettingsVersion.V4;
+		DefaultBuildSettings = BuildSettingsVersion.V5;
 
 		ExtraModuleNames.AddRange( new string[] { %EXTRA_MODULE_NAMES% } );
 	}

@@ -28,7 +28,7 @@ rem Build Visual Studio Project files and change version
 set VersionSelector=C:\JenkinsAgent\workspace\UELTS\Engine\Binaries\Win64\UnrealVersionSelector.exe
 
 rem Target params
-set EXTRA_MODULE_NAMES="%ProjectName%"
+set EXTRA_MODULE_NAMES=%ProjectName%
 
 set TargetTemplatePath=C:\JenkinsAgent\workspace\Unreal Games\TPS\devops\scripts\Templates\GameModule.Target.cs.template
 
@@ -37,5 +37,11 @@ set TargetGameTemplatePath=C:\JenkinsAgent\workspace\Unreal Games\TPS\devops\scr
 set GameIni=C:\JenkinsAgent\workspace\Unreal Games\TPS\Config\DefaultGame.ini
 
 set SourceCodePath=C:\JenkinsAgent\workspace\Unreal Games\TPS\Source
+
+
+rem Run client and server
+set ServerExePath=%ProjectRoot%\Package\ServerWithClent\WindowsServer\%ProjectName%Server.exe
+set ClientExePath=%ProjectRoot%\Package\ServerWithClent\WindowsClient\%ProjectName%Client.exe
+set GameExePath=%ProjectRoot%\Package\Game\Windows\%ProjectName%.exe
 
 exit /b

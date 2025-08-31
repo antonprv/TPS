@@ -6,7 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "TPSGameMode.generated.h"
 
-UCLASS(minimalapi)
+UCLASS(MinimalAPI)
 class ATPSGameMode : public AGameModeBase
 {
     GENERATED_BODY()

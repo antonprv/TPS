@@ -7,6 +7,14 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputActionValue.h"
+#include "InputMappingContext.h"
+#include "InputAction.h"
+
+
+DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // ATPSCharacter
@@ -15,10 +23,6 @@ ATPSCharacter::ATPSCharacter()
 {
     // Set size for collision capsule
     GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-
-    // set our turn rates for input
-    BaseTurnRate = 45.f;
-    BaseLookUpRate = 45.f;
 
     // Don't rotate when the controller rotates. Let that just affect the camera.
     bUseControllerRotationPitch = false;
@@ -43,83 +47,90 @@ ATPSCharacter::ATPSCharacter()
                                                                                  // boom adjust to match the controller orientation
     FollowCamera->bUsePawnControlRotation = false;                               // Camera does not rotate relative to arm
 
-    // Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character)
-    // are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+    // Input mapping context
+    DefaultMappingContext =
+        LoadObject<UInputMappingContext>(nullptr, TEXT("/Game/Input/IMC_PlayerControls.IMC_PlayerControls.IMC_PlayerControls"));
+    MoveAction = LoadObject<UInputAction>(nullptr, TEXT("/Game/Input/IA_Move.IA_Move"));
+    JumpAction = LoadObject<UInputAction>(nullptr, TEXT("/Game/Input/IA_Jump.IA_Jump"));
+    LookAction = LoadObject<UInputAction>(nullptr, TEXT("/Game/Input/IA_Camera.IA_Camera"));
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Input
 
+void ATPSCharacter::BeginPlay()
+{
+    // Call the base class
+    Super::BeginPlay();
+
+    // Add Input Mapping Context
+    if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+    {
+        if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+                ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+        {
+            Subsystem->AddMappingContext(DefaultMappingContext, 0);
+        }
+    }
+}
+
 void ATPSCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
-    // Set up gameplay key bindings
-    check(PlayerInputComponent);
-    PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-    PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+    // Set up action bindings
+    if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+    {
 
-    PlayerInputComponent->BindAxis("MoveForward", this, &ATPSCharacter::MoveForward);
-    PlayerInputComponent->BindAxis("MoveRight", this, &ATPSCharacter::MoveRight);
+        // Jumping
+        EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+        EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
-    // We have 2 versions of the rotation bindings to handle different kinds of devices differently
-    // "turn" handles devices that provide an absolute delta, such as a mouse.
-    // "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-    PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-    PlayerInputComponent->BindAxis("TurnRate", this, &ATPSCharacter::TurnAtRate);
-    PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-    PlayerInputComponent->BindAxis("LookUpRate", this, &ATPSCharacter::LookUpAtRate);
+        // Moving
+        EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATPSCharacter::Move);
 
-    // handle touch devices
-    PlayerInputComponent->BindTouch(IE_Pressed, this, &ATPSCharacter::TouchStarted);
-    PlayerInputComponent->BindTouch(IE_Released, this, &ATPSCharacter::TouchStopped);
+        // Looking
+        EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATPSCharacter::Look);
+    }
+    else
+    {
+        UE_LOG(LogTemplateCharacter, Error,
+            TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend "
+                 "to use the legacy system, then you will need to update this C++ file."),
+            *GetNameSafe(this));
+    }
 }
 
-void ATPSCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+void ATPSCharacter::Move(const FInputActionValue& Value)
 {
-    Jump();
-}
+    // input is a Vector2D
+    FVector2D MovementVector = Value.Get<FVector2D>();
 
-void ATPSCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-{
-    StopJumping();
-}
-
-void ATPSCharacter::TurnAtRate(float Rate)
-{
-    // calculate delta for this frame from the rate information
-    AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
-}
-
-void ATPSCharacter::LookUpAtRate(float Rate)
-{
-    // calculate delta for this frame from the rate information
-    AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
-}
-
-void ATPSCharacter::MoveForward(float Value)
-{
-    if ((Controller != NULL) && (Value != 0.0f))
+    if (Controller != nullptr)
     {
         // find out which way is forward
         const FRotator Rotation = Controller->GetControlRotation();
         const FRotator YawRotation(0, Rotation.Yaw, 0);
 
         // get forward vector
-        const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-        AddMovementInput(Direction, Value);
+        const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+        // get right vector
+        const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+        // add movement
+        AddMovementInput(ForwardDirection, MovementVector.Y);
+        AddMovementInput(RightDirection, MovementVector.X);
     }
 }
 
-void ATPSCharacter::MoveRight(float Value)
+void ATPSCharacter::Look(const FInputActionValue& Value)
 {
-    if ((Controller != NULL) && (Value != 0.0f))
-    {
-        // find out which way is right
-        const FRotator Rotation = Controller->GetControlRotation();
-        const FRotator YawRotation(0, Rotation.Yaw, 0);
+    // input is a Vector2D
+    FVector2D LookAxisVector = Value.Get<FVector2D>();
 
-        // get right vector
-        const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-        // add movement in that direction
-        AddMovementInput(Direction, Value);
+    if (Controller != nullptr)
+    {
+        // add yaw and pitch input to controller
+        AddControllerYawInput(LookAxisVector.X);
+        AddControllerPitchInput(-LookAxisVector.Y);
     }
 }

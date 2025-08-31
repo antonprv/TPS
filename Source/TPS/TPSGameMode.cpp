@@ -8,10 +8,19 @@
 ATPSGameMode::ATPSGameMode()
 {
     // set default pawn class to our Blueprinted character
-    static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPersonCPP/Blueprints/ThirdPersonCharacter"));
-    if (PlayerPawnBPClass.Class != NULL)
+    // Find the Blueprint class of our player pawn
+    static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(
+        TEXT("/Game/ThirdPersonCPP/Blueprints/Controller/BP_PlayerCharacter"));
+
+    if (PlayerPawnBPClass.Succeeded())
     {
         DefaultPawnClass = PlayerPawnBPClass.Class;
+    }
+    else
+    {
+        // Fallback to C++ class if Blueprint is missing (important for server-only builds)
+        DefaultPawnClass = APawn::StaticClass();
+        UE_LOG(LogTemp, Warning, TEXT("BP_PlayerCharacter not found! Defaulting to APawn."));
     }
 }
 
@@ -19,8 +28,8 @@ void ATPSGameMode::BeginPlay()
 {
     Super::BeginPlay();
     SetLowScalability();
-    SetMaxFPS(100);
-    SetScreenPercentage(100);
+    SetMaxFPS(240);
+    SetScreenPercentage(60);
 }
 
 void ATPSGameMode::SetLowScalability()
@@ -35,7 +44,7 @@ void ATPSGameMode::SetLowScalability()
             Settings->ScalabilityQuality.PostProcessQuality = 1;
             Settings->ScalabilityQuality.ShadowQuality = 2;
             Settings->ScalabilityQuality.TextureQuality = 0;
-            Settings->ScalabilityQuality.ViewDistanceQuality = 0;
+            Settings->ScalabilityQuality.ViewDistanceQuality = 1;
 
             // Apply and save the settings
             Settings->ApplyNonResolutionSettings();

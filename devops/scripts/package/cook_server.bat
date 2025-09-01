@@ -6,4 +6,4 @@ call "%~dp0\..\..\config.bat"
 -project="%ProjectPath%" ^
 -platform=%Platform% ^
 -serverconfig="%Configuration%" ^
--build -cook -iterate -skippackage -allmaps -server
+-build -cook -iterate -skippackage -allmaps -server -noclient

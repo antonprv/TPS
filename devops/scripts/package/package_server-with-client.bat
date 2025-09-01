@@ -1,20 +1,13 @@
 @echo off
 
-setlocal
+call "%~dp0\..\..\config.bat"
 
-rem List of target scripts
-set TargetScripts=package_client.bat cook_game.bat package_server.bat
+"%RunUATPath%" BuildCookRun ^
+-project="%ProjectPath%" ^
+-platform=%Platform% ^
+-archivedirectory="%PackagePath%\ServerWithClent" ^
+-clientconfig="%Configuration%" ^
+-serverconfig="%Configuration%" ^
+-build -cook -iterate -package -stage -archive -pak -allmaps -iostore -compressed -server -client
 
-rem Loop through each script and call it
-for %%S in (%TargetScripts%) do (
-    if exist "%%S" (
-        echo Running %%S...
-        call "%%S"
-    ) else (
-        echo File not found: %%S
-    )
-)
-
-endlocal
-echo All scripts finished.
 pause

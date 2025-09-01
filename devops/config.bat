@@ -3,7 +3,7 @@
 rem Engine params
 set EnginePath_4.23=E:\UE_Other\UE_4.23
 set EnginePath_5.3=D:\Games\UE_5.3
-set EnginePath_5.6=C:\JenkinsAgent\workspace\UELTS
+set EnginePath_5.6=C:\Programs\UE_5.6
 
 rem Select engine from the list
 set SelectedEngine=%EnginePath_5.6%
@@ -25,7 +25,7 @@ rem Packaging params
 set PackagePath=%ProjectRoot%\Package
 
 rem Build Visual Studio Project files and change version
-set VersionSelector=C:\JenkinsAgent\workspace\UELTS\Engine\Binaries\Win64\UnrealVersionSelector.exe
+set VersionSelector=C:\Program Files (x86)\Epic Games\Launcher\Engine\Binaries\Win64\UnrealVersionSelector.exe
 
 rem Target params
 set EXTRA_MODULE_NAMES=%ProjectName%

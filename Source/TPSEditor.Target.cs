@@ -9,6 +9,6 @@ public class TPSEditorTarget : TargetRules
 	{ 
 		Type = TargetType.Editor; 
 		DefaultBuildSettings = BuildSettingsVersion.V5; 
-		ExtraModuleNames.AddRange( new string[] { "TPS"} ); 
+		ExtraModuleNames.AddRange( new string[] { "TPS" } ); 
 	} 
 } 

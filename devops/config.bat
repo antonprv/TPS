@@ -1,8 +1,8 @@
 @echo off
 
 rem Engine params
-set EnginePath_4.23=E:\UE_Other\UE_4.23
-set EnginePath_5.3=D:\Games\UE_5.3
+set EnginePath_4.23=C:\Programs\UE_4.23
+set EnginePath_5.3=C:\Programs\UE_5.3
 set EnginePath_5.6=C:\Programs\UE_5.6
 
 rem Select engine from the list
